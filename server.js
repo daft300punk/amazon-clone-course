@@ -24,11 +24,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/create-user', (req, res, next) => {
+<<<<<<< HEAD
+=======
+  console.log('inside post route');
+>>>>>>> origin/master
   var user = new User();
 
   user.profile.name = req.body.name;
   user.password = req.body.password;
   user.email = req.body.email;
+<<<<<<< HEAD
+=======
+  console.log(req.body);
+>>>>>>> origin/master
   user.save((err) => {
     if(err) return next(err);
 

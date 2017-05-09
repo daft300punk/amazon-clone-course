@@ -19,10 +19,16 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   var user = this;
+  console.log('pre');
   if(!user.isModified('password')) return next();
   bcrypt.genSalt(10, (err, salt) => {
+    console.log('inside gensalt', err, salt);
     if(err) return next(err);
     bcrypt.hash(user.password, salt, function(err, hash) {
+<<<<<<< HEAD
+=======
+      console.log('inside hash', err, hash);
+>>>>>>> origin/master
       if(err) return next(err);
       user.password = hash;
       next();
