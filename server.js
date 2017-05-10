@@ -2,6 +2,8 @@ var express = require('express');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var ejs = require('ejs');
+var ejsmate = require('ejs-mate');
 
 var User = require('./models/user');
 
@@ -22,6 +24,9 @@ mongoose.connect(dbUrl, (err) => {
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.engine('ejs', ejsmate);
+app.set('view engine', 'ejs');
 
 app.post('/create-user', (req, res, next) => {
   var user = new User();
