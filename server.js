@@ -7,6 +7,8 @@ var ejsmate = require('ejs-mate');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var flash = require('express-flash');
+var MongoStore = require('connect-mongo')(session);
+var passport = require('passport');
 
 var User = require('./models/user');
 
@@ -14,7 +16,7 @@ var app = express();
 
 mongoose.Promise = Promise;
 
-var dbConfig = require('./db.config');
+var dbConfig = require('.config/db.config');
 var dbUrl = `mongodb://${dbConfig.DB_USERNAME}:${dbConfig.DB_PASSWORD}@ds135577.mlab.com:35577/daft300punk-ecomm`
 mongoose.connect(dbUrl, (err) => {
   if(err) {
@@ -32,7 +34,8 @@ app.use(cookieParser());
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: 'absi'
+  secret: 'absi',
+  store: new MongoStore({ url: dbUrl, autoReconnect: true });
 }));
 app.use(flash());
 
