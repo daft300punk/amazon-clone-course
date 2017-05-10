@@ -21,12 +21,21 @@ mongoose.connect(dbUrl, (err) => {
   }
 });
 
+app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.engine('ejs', ejsmate);
 app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+  res.render('main/home');
+});
+
+app.get('/about', (req, res) => {
+  res.render('main/about');
+})
 
 app.post('/create-user', (req, res, next) => {
   var user = new User();
