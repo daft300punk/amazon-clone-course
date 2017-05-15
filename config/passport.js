@@ -1,31 +1,36 @@
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy();
+var LocalStrategy = require('passport-local').Strategy;
+var User = require('../models/user');
 
 // serialize and deserialize
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
+  console.log('serialize');
   done(null, user._id);
 });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+passport.deserializeUser(function (id, done) {
+  console.log('deserialize');
+  User.findById(id, function (err, user) {
     done(err, user);
   });
 });
 
 // middleware
 passport.use('local-login', new LocalStrategy({
-  usernameFiled: 'email',
-  passwordFiled: 'password',
+  usernameField: 'email',
+  passwordField: 'password',
   passReqToCallback: true,
-}, function(req, email, password, done) {
-  User.findOne({ email: email }, function(err, user) {
-    if(err) return done(err);
+}, function (req, email, password, done) {
 
-    if(!user) {
+  User.findOne({ email: email }, function (err, user) {
+    console.log('here');
+    if (err) return done(err);
+
+    if (!user) {
       return done(null, false, req.flash('loginMessage', 'No user has been found'));
     }
 
-    if(!user.comparePassword(password)) {
+    if (!user.comparePassword(password)) {
       return done(null, false, req.flash('loginMessage', 'Oops! Wrong password pal.'));
     }
 
@@ -33,11 +38,13 @@ passport.use('local-login', new LocalStrategy({
   });
 }));
 
-// custom function to validate
-exports.isAuthenticated = function(req, res, next) {
-  if(req.isAuthenticated()) {
+//custom function to validate
+exports.isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated()) {
     return next();
   }
 
   res.redirect('/login');
 }
+
+exports.passport = passport;
