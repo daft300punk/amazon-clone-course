@@ -16,10 +16,10 @@ var app = express();
 
 mongoose.Promise = Promise;
 
-var dbConfig = require('.config/db.config');
-var dbUrl = `mongodb://${dbConfig.DB_USERNAME}:${dbConfig.DB_PASSWORD}@ds135577.mlab.com:35577/daft300punk-ecomm`
+var dbConfig = require('./config/db.config');
+var dbUrl = `mongodb://${dbConfig.DB_USERNAME}:${dbConfig.DB_PASSWORD}@ds135577.mlab.com:35577/daft300punk-ecomm`;
 mongoose.connect(dbUrl, (err) => {
-  if(err) {
+  if (err) {
     console.log(err);
   } else {
     console.log('Connected to db');
@@ -35,9 +35,11 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   secret: 'absi',
-  store: new MongoStore({ url: dbUrl, autoReconnect: true });
+  store: new MongoStore({ url: dbUrl, autoReconnect: true })
 }));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.engine('ejs', ejsmate);
 app.set('view engine', 'ejs');
@@ -48,6 +50,6 @@ app.use(mainRoutes);
 app.use(userRoutes);
 
 app.listen(3000, (err) => {
-  if(err) throw err;
+  if (err) throw err;
   console.log('Server is running');
 });
