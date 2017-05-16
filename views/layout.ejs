@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Jumbotron Template for Bootstrap</title>
-    <!-- Bootstrap core CSS -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/custom.css" rel="stylesheet">
-  </head>
 
-  <body>
-    <% include ./partials/navbar %>
+<head>
+  <title>Jumbotron Template for Bootstrap</title>
+  <!-- Bootstrap core CSS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  <script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/custom.css" rel="stylesheet">
+</head>
+
+<body>
+  <% include ./partials/navbar %>
 
     <div class="container">
       <%- body -%>
-    </div> <!-- /container -->
+    </div>
+    <!-- /container -->
 
     <% include ./partials/footer %>
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous">
-    </script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-  </body>
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+
+        </script>
+      <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+</body>
+
 </html>
