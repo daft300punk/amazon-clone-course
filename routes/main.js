@@ -9,10 +9,18 @@ router.get('/about', (req, res) => {
   res.render('main/about');
 });
 
-router.get('/users', function(req, res) {
-  User.find({}, function(err, users) {
-    res.json(users);
-  })
-})
+router.get('/products/:id', function(req, res) {
+  Product
+    .find({
+      category: req.params.id
+    })
+    .populate('category')
+    .exec(function(err, products) {
+      if (err) return next(err);
+      res.render('main/category', {
+        products: products
+      });
+    });
+});
 
 module.exports = router;
