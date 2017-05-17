@@ -6,6 +6,7 @@ var Product = require('../models/product');
 
 
 router.get('/:name', function(req, res, next) {
+  console.log(req.params.name);
   async.waterfall([
     function(callback) {
       Category.findOne({
@@ -15,9 +16,11 @@ router.get('/:name', function(req, res, next) {
         callback(null, category);
       });
     },
-    function(callback) {
+    function(category, callback) {
       for (var i = 0; i < 30; i++) {
         var product = new Product();
+        product.category = category._id;
+        console.log(product.category);
         product.name = faker.commerce.productName();
         product.price = faker.commerce.price();
         product.image = faker.image.image();
