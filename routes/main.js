@@ -27,6 +27,30 @@ stream.on('error', function() {
   console.log(err);
 });
 
+router.post('/search', function(req, res, next) {
+  res.redirect('/search?q=' + req.body.q);
+});
+
+router.get('/search', function(req, res, next) {
+  if (req.query.q) {
+    Product.search({
+      query_string: {
+        query: req.query.q
+      }
+    }, function(err, results) {
+      if (err) return next(err);
+      var data = results.hits.hits.map(function(hit) {
+        return hit;
+      });
+      console.log(data);
+      res.render('main/search-result', {
+        query: req.query.q,
+        data: data
+      });
+    });
+  }
+})
+
 router.get('/', (req, res) => {
   res.render('main/home');
 });
